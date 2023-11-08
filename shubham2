@@ -1,0 +1,91 @@
+import random
+
+# Define game scenes and choices
+scenes = {
+    "start": {
+        "text": "You wake up in a mysterious forest. The path diverges. Do you go left or right?",
+        "choices": {
+            "left": "Go left",
+            "right": "Go right"
+        }
+    },
+    "left": {
+        "text": "You discover a hidden cave. Inside, there's a sword. Do you take it?",
+        "choices": {
+            "take_sword": "Take the sword",
+            "ignore_sword": "Leave the sword"
+        }
+    },
+    "right": {
+        "text": "You find a bridge guarded by a troll. Fight or try to negotiate?",
+        "choices": {
+            "fight_troll": "Fight the troll",
+            "negotiate_troll": "Try to negotiate with the troll"
+        }
+    },
+    "take_sword": {
+        "text": "You took the sword. It will be useful.",
+        "choices": {
+            "continue": "Continue your journey"
+        }
+    },
+    "fight_troll": {
+        "text": "You fought the troll and won. You can now cross the bridge.",
+        "choices": {
+            "cross_bridge": "Cross the bridge"
+        }
+    },
+    "negotiate_troll": {
+        "text": "The troll agreed to let you pass peacefully.",
+        "choices": {
+            "cross_bridge": "Cross the bridge"
+        }
+    },
+    "cross_bridge": {
+        "text": "You cross the bridge and continue your journey.",
+        "choices": {
+            "end_win": "Congratulations! You completed the adventure and won."
+        }
+    },
+    "end_win": {
+        "text": "Congratulations! You completed the adventure and won.",
+        "choices": {}
+    },
+    "end_lose": {
+        "text": "You made a wrong move and got lost in the forest. Game over.",
+        "choices": {}
+    }
+}
+
+# Create a function for player choices
+def get_user_choice(scene):
+    print(scene["text"])
+    choices = scene["choices"]
+    for i, (key, value) in enumerate(choices.items(), 1):
+        print(f"{i}. {value}")
+    choice = input("Enter the number of your choice: ")
+    if choice.isdigit() and 1 <= int(choice) <= len(choices):
+        return list(choices.keys())[int(choice) - 1]
+    else:
+        return "invalid"
+
+# Main game loop
+def main():
+    current_scene = "start"
+
+    while current_scene:
+        if current_scene in scenes:
+            current_scene = scenes[current_scene]
+            choice = get_user_choice(current_scene)
+
+            if choice == "invalid":
+                print("Invalid choice. Try again.")
+            else:
+                current_scene = choice
+
+        elif current_scene == "end_lose":
+            print("Game over. You lost the game.")
+            break
+
+if _name_ == "_main_":
+    main()
